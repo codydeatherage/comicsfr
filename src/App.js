@@ -44,8 +44,8 @@ const App = () => {
   
 */
 const Current = styled.div`
-  height: 40vh;
-  width: 100vw;
+  height: 50vh;
+  width: 60vw;
   background-color: rgb(24,24,24);
   margin-bottom: 25px;
 `
