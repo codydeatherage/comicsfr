@@ -1,39 +1,27 @@
-import styled from 'styled-components'
-import img1 from './assets/sample.jpg'
-import img2 from './assets/sample2.jpg'
-import img3 from './assets/sample3.jpg'
-import ComicCarousel from './components/ComicCarousel'
+import { BrowserRouter as Router, Route, Routes} from 'react-router-dom'
+import Home from './pages/Home'
+import ComicsInput from './components/ComicsInput'
 import './App.css';
 
 
 const App = () => {
-  const currentItems = [
-    {
-      title: 'Shang Chi',
-      img: img1
-    },
-    {
-      title: 'Moon Knight',
-      img: img2
-    },
-    {
-      title: 'Superman and the Authority',
-      img: img3
-    }
-  ]
+
   return (
-    <>
-      <Current>
-        <ComicCarousel items={currentItems}/>
-      </Current>
-      <Ongoing>
-
-      </Ongoing>
-
-      <Selection>
-
-      </Selection>
-    </>
+    <Router>
+      <Routes>
+        <Route
+          exact
+          path="/"
+          element={<Home/>}
+          
+        />
+        <Route
+          exact
+          path="/comics"
+          element={<ComicsInput/>}
+        />
+      </Routes>
+    </Router>
   );
 }
 /*TODO FOR CAROUSEL CARDS:
@@ -43,27 +31,7 @@ const App = () => {
   Volume/Issue #
   
 */
-const Current = styled.div`
-  height: 50vh;
-  width: 60vw;
-  background-color: rgb(24,24,24);
-  margin-bottom: 25px;
-`
 
-
-const Ongoing = styled.div`
-  height: 40vh;
-  width: 100vw;
-  background-color: rgb(124,124,124);
-
-`
-
-
-const Selection = styled.div`
-  height: 40vh;
-  width: 100vw;
-  background-color: rgb(224,224,224);
-`
 
 
 // const Carousel = styled.div.attrs({
