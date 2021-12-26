@@ -1,11 +1,55 @@
 import React from 'react'
 import styled from 'styled-components'
-
+import Button from 'react-bootstrap/Button'
+import Form from 'react-bootstrap/Form'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
 const ComicsInput = () => {
     return (
         <Container>
-            
-            <Row>
+            <Form>
+                <Form.Group className="mb-3" controlId="title">
+                    <Form.Label>Title</Form.Label>
+                    <Form.Control type="email" placeholder="Title"  />
+                </Form.Group>
+
+                <Form.Group className="mb-3" controlId="publisher">
+                    <Form.Label>Publisher</Form.Label>
+                    <Form.Control type="text" placeholder="Publisher" style={{ width: '60%' }} />
+                </Form.Group>
+
+                <Form.Group className="mb-3" controlId="publishYear">
+                    <Form.Label>Year</Form.Label>
+                    <Form.Control type="text" placeholder="Year" style={{ width: '30%' }}/>
+                </Form.Group>
+
+                <Form.Group className="mb-3" controlId="issueNumber">
+                    <Form.Label>Issue #</Form.Label>
+                    <Form.Control type="number" placeholder="#" style={{ width: '20%' }} />
+                </Form.Group>
+                <h1>Creators</h1>
+                <Row className="g-2">
+                    <Col md>
+                        <Form.Group className="mb-3" controlId="creator">
+                            <Form.Label>Name</Form.Label>
+                            <Form.Control type="text" placeholder="Name" />
+                        </Form.Group>
+                    </Col>
+                    <Col sm>
+                        <Form.Label>Role</Form.Label>
+                        <Form.Select aria-label="Floating label select example">
+                            <option>Role</option>
+                            <option value="1">Writer</option>
+                            <option value="2">Artist</option>
+                            <option value="3">Letterer</option>
+                        </Form.Select>
+                    </Col>
+                </Row>
+                <Button variant="primary" type="submit">
+                    Submit
+                </Button>
+            </Form>
+            {/*             <Row>
                 <Label for="title" >Title</Label>
                 <Input id="title" />
             </Row>
@@ -47,7 +91,7 @@ const ComicsInput = () => {
                     accept="image/*"
                     id="button-file"
                 ></input>
-            </Row>
+            </Row> */}
 
 
         </Container>
@@ -57,22 +101,24 @@ const ComicsInput = () => {
 export default ComicsInput
 
 const Container = styled.div`
-    display: flex;
-    align-content: flex-start;
-    flex-wrap: wrap;
+    padding: 5%;
     width: 50vw;
-    height: 80vh;
+    height: auto;
+    min-height: 60vh;
     margin-left: 25vw;
-    background-color: beige;
+    margin-top: 10vh;
+    color: white;
+    background-color: #112b5c;
+    border-radius: 10%;
 `
-const Row = styled.div`
+/* const Row = styled.div`
     display: block;
     width: 100%;
     height: 5%;
     padding-left: 15%;
     border: 1px solid black;
     margin-top: 2%;
-`
+` */
 const Input = styled.input`
     width: 60%;
     margin-left: 20%;
