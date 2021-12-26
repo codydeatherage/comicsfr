@@ -4,20 +4,28 @@ import styled from 'styled-components'
 const ComicsInput = () => {
     return (
         <Container>
-
+            
             <Row>
                 <Label for="title" >Title</Label>
                 <Input id="title" />
             </Row>
 
             <Row>
-                <Label for="issue">Issue</Label>
-                <Input id="issue" />
+                <Label style={{fontSize: '15px'}} for="issues"> # Of Issues</Label>
+                <Input type="number" id="issues" />
             </Row>
 
             <Row>
                 <Label for="writer">Writer</Label>
                 <Input id="writer" />
+            </Row>
+            <Row>
+                <Label for="artist">Artist</Label>
+                <Input id="artist" />
+            </Row>
+            <Row>
+                <Label for="cover_artist">Cover Artist</Label>
+                <Input id="cover_artist" />
             </Row>
 
             <Row>
@@ -32,6 +40,13 @@ const ComicsInput = () => {
 
             <Row>
                 <button type="submit">Submit</button>
+            </Row>
+            <Row>
+                <input
+                    type="file"
+                    accept="image/*"
+                    id="button-file"
+                ></input>
             </Row>
 
 
