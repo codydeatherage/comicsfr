@@ -1,90 +1,60 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
+
+import CreatorInput from './forms/CreatorInput'
 const ComicsInput = () => {
+    //information about comic creators
+    const [creators, changeCreators] = useState([{ name: "", role: "" }])
+
+    const addCreator = () => {
+        changeCreators(arr => [...arr, { name: "", role: "" }])
+    }
+
+    const changeName = (name, index) => {
+        let newArr = [...creators];//copy creators info to newArr
+        newArr[index].name = name;//modify the chosen index
+        changeCreators(newArr);//set state = modified newArr
+    }
+
+    const changeRole = () => {
+        console.log('role changed');
+    }
+
+    const fields = [
+        { id: "title", label: "Title", placeholder: "Title", width: "100%", type: "text" },
+        { id: "publisher", label: "Publisher", placeholder: "Publisher", width: "60%", type: "text" },
+        { id: "publishYear", label: "Year", placeholder: "Year", width: "30%", type: "text" },
+        { id: "issueNumber", label: "Issue #", placeholder: "#", width: "20%", type: "number" },
+    ]
+
+    const allCreators = [];
+    for (let i = 0; i < creators.length; i++) {
+        /* pass index as a prop so that we can tell
+           which instance of CreatorInput belongs to which index */
+        
+        allCreators.push(<CreatorInput index={i}  changeName={changeName} changeRole={changeRole} />);
+    }
     return (
         <Container>
             <Form>
-                <Form.Group className="mb-3" controlId="title">
-                    <Form.Label>Title</Form.Label>
-                    <Form.Control type="email" placeholder="Title"  />
-                </Form.Group>
-
-                <Form.Group className="mb-3" controlId="publisher">
-                    <Form.Label>Publisher</Form.Label>
-                    <Form.Control type="text" placeholder="Publisher" style={{ width: '60%' }} />
-                </Form.Group>
-
-                <Form.Group className="mb-3" controlId="publishYear">
-                    <Form.Label>Year</Form.Label>
-                    <Form.Control type="text" placeholder="Year" style={{ width: '30%' }}/>
-                </Form.Group>
-
-                <Form.Group className="mb-3" controlId="issueNumber">
-                    <Form.Label>Issue #</Form.Label>
-                    <Form.Control type="number" placeholder="#" style={{ width: '20%' }} />
-                </Form.Group>
-                <h1>Creators</h1>
-                <Row className="g-2">
-                    <Col md>
-                        <Form.Group className="mb-3" controlId="creator">
-                            <Form.Label>Name</Form.Label>
-                            <Form.Control type="text" placeholder="Name" />
+                {fields.map((field, index) => {
+                    return (
+                        <Form.Group key={index} className="mb-3" controlId={field.id}>
+                            <Form.Label>{field.label}</Form.Label>
+                            <Form.Control type={field.type} placeholder={field.placeholder} style={{ width: `${field.width}` }} />
                         </Form.Group>
-                    </Col>
-                    <Col sm>
-                        <Form.Label>Role</Form.Label>
-                        <Form.Select aria-label="Floating label select example">
-                            <option>Role</option>
-                            <option value="1">Writer</option>
-                            <option value="2">Artist</option>
-                            <option value="3">Letterer</option>
-                        </Form.Select>
-                    </Col>
-                </Row>
+                    )
+                })}
+                <h1>Creators</h1>
+                {allCreators.map((c, index) => c)}
+                <Button variant="primary" type="button" onClick={addCreator}>+ Add Creator</Button>
                 <Button variant="primary" type="submit">
                     Submit
                 </Button>
             </Form>
-            {/*             <Row>
-                <Label for="title" >Title</Label>
-                <Input id="title" />
-            </Row>
-
-            <Row>
-                <Label style={{fontSize: '15px'}} for="issues"> # Of Issues</Label>
-                <Input type="number" id="issues" />
-            </Row>
-
-            <Row>
-                <Label for="writer">Writer</Label>
-                <Input id="writer" />
-            </Row>
-            <Row>
-                <Label for="artist">Artist</Label>
-                <Input id="artist" />
-            </Row>
-            <Row>
-                <Label for="cover_artist">Cover Artist</Label>
-                <Input id="cover_artist" />
-            </Row>
-
-            <Row>
-                <Label for="publisher">Publisher</Label>
-                <Input id="publisher" />
-            </Row>
-
-            <Row>
-                <Label for="year">Year</Label>
-                <Input id="year" />
-            </Row>
-
-            <Row>
-                <button type="submit">Submit</button>
-            </Row>
+            {/*
             <Row>
                 <input
                     type="file"
@@ -92,8 +62,6 @@ const ComicsInput = () => {
                     id="button-file"
                 ></input>
             </Row> */}
-
-
         </Container>
     )
 }
@@ -110,24 +78,4 @@ const Container = styled.div`
     color: white;
     background-color: #112b5c;
     border-radius: 10%;
-`
-/* const Row = styled.div`
-    display: block;
-    width: 100%;
-    height: 5%;
-    padding-left: 15%;
-    border: 1px solid black;
-    margin-top: 2%;
-` */
-const Input = styled.input`
-    width: 60%;
-    margin-left: 20%;
-    height: 100%;
-`
-
-const Label = styled.label`
-    color: black;
-    width: 25px;
-    font-size: 36px;
-    line-height: 25px;
 `
