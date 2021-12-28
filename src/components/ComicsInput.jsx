@@ -7,6 +7,10 @@ import CreatorInput from './forms/CreatorInput'
 const ComicsInput = () => {
     //information about comic creators
     const [creators, changeCreators] = useState([{ name: "", role: "" }])
+    const [upload, setUpload] = useState();
+    if(upload){
+        console.log(upload);
+    }
 
     const addCreator = () => {
         changeCreators(arr => [...arr, { name: "", role: "" }])
@@ -33,8 +37,8 @@ const ComicsInput = () => {
     for (let i = 0; i < creators.length; i++) {
         /* pass index as a prop so that we can tell
            which instance of CreatorInput belongs to which index */
-        
-        allCreators.push(<CreatorInput index={i}  changeName={changeName} changeRole={changeRole} />);
+
+        allCreators.push(<CreatorInput index={i} changeName={changeName} changeRole={changeRole} />);
     }
     return (
         <Container>
@@ -49,19 +53,16 @@ const ComicsInput = () => {
                 })}
                 <h1>Creators</h1>
                 {allCreators.map((c, index) => c)}
-                <Button variant="primary" type="button" onClick={addCreator}>+ Add Creator</Button>
+                <Button className="mb-3" variant="primary" type="button" onClick={addCreator} style={{ width: '100%' }}>+ Add Creator</Button>
+                <Form.Group controlId="formFile" className="mb-3">
+                    <Form.Label>Default file input example</Form.Label>
+                    <Form.Control type="file" onChange={(e)=> setUpload(e.target.files)}/>
+                </Form.Group>
+
                 <Button variant="primary" type="submit">
                     Submit
                 </Button>
             </Form>
-            {/*
-            <Row>
-                <input
-                    type="file"
-                    accept="image/*"
-                    id="button-file"
-                ></input>
-            </Row> */}
         </Container>
     )
 }
