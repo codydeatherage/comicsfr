@@ -1,40 +1,67 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
+import Button from 'react-bootstrap/Button'
+import Form from 'react-bootstrap/Form'
 
+import CreatorInput from './forms/CreatorInput'
 const ComicsInput = () => {
+    //information about comic creators
+    const [creators, changeCreators] = useState([{ name: "", role: "" }])
+
+    const addCreator = () => {
+        changeCreators(arr => [...arr, { name: "", role: "" }])
+    }
+
+    const changeName = (name, index) => {
+        let newArr = [...creators];//copy creators info to newArr
+        newArr[index].name = name;//modify the chosen index
+        changeCreators(newArr);//set state = modified newArr
+    }
+
+    const changeRole = () => {
+        console.log('role changed');
+    }
+
+    const fields = [
+        { id: "title", label: "Title", placeholder: "Title", width: "100%", type: "text" },
+        { id: "publisher", label: "Publisher", placeholder: "Publisher", width: "60%", type: "text" },
+        { id: "publishYear", label: "Year", placeholder: "Year", width: "30%", type: "text" },
+        { id: "issueNumber", label: "Issue #", placeholder: "#", width: "20%", type: "number" },
+    ]
+
+    const allCreators = [];
+    for (let i = 0; i < creators.length; i++) {
+        /* pass index as a prop so that we can tell
+           which instance of CreatorInput belongs to which index */
+        
+        allCreators.push(<CreatorInput index={i}  changeName={changeName} changeRole={changeRole} />);
+    }
     return (
         <Container>
-
+            <Form>
+                {fields.map((field, index) => {
+                    return (
+                        <Form.Group key={index} className="mb-3" controlId={field.id}>
+                            <Form.Label>{field.label}</Form.Label>
+                            <Form.Control type={field.type} placeholder={field.placeholder} style={{ width: `${field.width}` }} />
+                        </Form.Group>
+                    )
+                })}
+                <h1>Creators</h1>
+                {allCreators.map((c, index) => c)}
+                <Button variant="primary" type="button" onClick={addCreator}>+ Add Creator</Button>
+                <Button variant="primary" type="submit">
+                    Submit
+                </Button>
+            </Form>
+            {/*
             <Row>
-                <Label for="title" >Title</Label>
-                <Input id="title" />
-            </Row>
-
-            <Row>
-                <Label for="issue">Issue</Label>
-                <Input id="issue" />
-            </Row>
-
-            <Row>
-                <Label for="writer">Writer</Label>
-                <Input id="writer" />
-            </Row>
-
-            <Row>
-                <Label for="publisher">Publisher</Label>
-                <Input id="publisher" />
-            </Row>
-
-            <Row>
-                <Label for="year">Year</Label>
-                <Input id="year" />
-            </Row>
-
-            <Row>
-                <button type="submit">Submit</button>
-            </Row>
-
-
+                <input
+                    type="file"
+                    accept="image/*"
+                    id="button-file"
+                ></input>
+            </Row> */}
         </Container>
     )
 }
@@ -42,31 +69,13 @@ const ComicsInput = () => {
 export default ComicsInput
 
 const Container = styled.div`
-    display: flex;
-    align-content: flex-start;
-    flex-wrap: wrap;
+    padding: 5%;
     width: 50vw;
-    height: 80vh;
+    height: auto;
+    min-height: 60vh;
     margin-left: 25vw;
-    background-color: beige;
-`
-const Row = styled.div`
-    display: block;
-    width: 100%;
-    height: 5%;
-    padding-left: 15%;
-    border: 1px solid black;
-    margin-top: 2%;
-`
-const Input = styled.input`
-    width: 60%;
-    margin-left: 20%;
-    height: 100%;
-`
-
-const Label = styled.label`
-    color: black;
-    width: 25px;
-    font-size: 36px;
-    line-height: 25px;
+    margin-top: 10vh;
+    color: white;
+    background-color: #112b5c;
+    border-radius: 10%;
 `
