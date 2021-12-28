@@ -2,15 +2,16 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
+import firebase from '../firebase-config'
+import 'firebase/compat/storage'
 
 import CreatorInput from './forms/CreatorInput'
 const ComicsInput = () => {
     //information about comic creators
     const [creators, changeCreators] = useState([{ name: "", role: "" }])
     const [upload, setUpload] = useState();
-    if(upload){
-        console.log(upload);
-    }
+    const [progress, setProgress] = useState(0);
+    const [downloadURL, setDownloadURL] = useState();
 
     const addCreator = () => {
         changeCreators(arr => [...arr, { name: "", role: "" }])
@@ -26,6 +27,13 @@ const ComicsInput = () => {
         console.log('role changed');
     }
 
+    const uploadImage = () => {
+        const file = upload;
+        console.log(file);
+        const storage = firebase.storage();
+        storage.ref(`/images/${file.name}`).put(file);
+    }
+    
     const fields = [
         { id: "title", label: "Title", placeholder: "Title", width: "100%", type: "text" },
         { id: "publisher", label: "Publisher", placeholder: "Publisher", width: "60%", type: "text" },
@@ -56,12 +64,15 @@ const ComicsInput = () => {
                 <Button className="mb-3" variant="primary" type="button" onClick={addCreator} style={{ width: '100%' }}>+ Add Creator</Button>
                 <Form.Group controlId="formFile" className="mb-3">
                     <Form.Label>Default file input example</Form.Label>
-                    <Form.Control type="file" onChange={(e)=> setUpload(e.target.files)}/>
+                    <Form.Control type="file" onChange={(e) => setUpload(e.target.files[0])} />
                 </Form.Group>
 
-                <Button variant="primary" type="submit">
+                {downloadURL ? <img src={downloadURL} alt=""></img> : null}
+
+                <Button variant="primary" type="button" onClick={uploadImage}>
                     Submit
                 </Button>
+                {progress}
             </Form>
         </Container>
     )
