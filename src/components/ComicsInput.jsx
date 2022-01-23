@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
+import FloatingLabel from 'react-bootstrap/FloatingLabel'
 import firebase from '../firebase-config'
 import 'firebase/compat/storage'
 
@@ -33,10 +34,10 @@ const ComicsInput = () => {
         const storage = firebase.storage();
         storage.ref(`/images/${file.name}`).put(file);
     }
-    
+
     const fields = [
         { id: "title", label: "Title", placeholder: "Title", width: "100%", type: "text" },
-        { id: "publisher", label: "Publisher", placeholder: "Publisher", width: "60%", type: "text" },
+        { id: "publisher", label: "Publisher", placeholder: "Publisher", width: "100%", type: "text" },
         { id: "publishYear", label: "Year", placeholder: "Year", width: "30%", type: "text" },
         { id: "issueNumber", label: "Issue #", placeholder: "#", width: "20%", type: "number" },
     ]
@@ -50,18 +51,49 @@ const ComicsInput = () => {
     }
     return (
         <Container>
-            <Form>
-                {fields.map((field, index) => {
-                    return (
-                        <Form.Group key={index} className="mb-3" controlId={field.id}>
-                            <Form.Label>{field.label}</Form.Label>
-                            <Form.Control type={field.type} placeholder={field.placeholder} style={{ width: `${field.width}` }} />
-                        </Form.Group>
-                    )
-                })}
+            <Form style={{ width: '50%', padding: '5%' }}>
+
+                {/*Title Input*/}
+                <Form.Group className='mb-3' controlId='title'>
+                    <Form.Floating>
+                        <Form.Control id='title' type='text' placeholder='Title' style={{ width: '100%', height: '20px' }} />
+                        <label style={{ color: 'black', lineHeight: '0' }} htmlFor='title'>Title</label>
+                    </Form.Floating>
+                </Form.Group>
+
+                {/*Publisher Input*/}
+                <Form.Group className="mb-3" controlId='publisher'>
+                    <Form.Floating>
+                        <Form.Control id='publisher' type='text' placeholder='Placeholder' style={{ width: '100%', height: '20px' }} />
+                        <label style={{ color: 'black', lineHeight: '0' }} htmlFor='publisher'>Publisher</label>
+                    </Form.Floating>
+                </Form.Group>
+
                 <h1>Creators</h1>
                 {allCreators.map((c, index) => c)}
                 <Button className="mb-3" variant="primary" type="button" onClick={addCreator} style={{ width: '100%' }}>+ Add Creator</Button>
+
+                {/*Year Input*/}
+                <Row>
+                    <Form.Group className="mb-3" controlId='year'>
+                        <Form.Floating>
+                            <Form.Control id='year' min='1940' max='2022' type='number' placeholder='Year' style={{ width: '100%', height: '20px' }} />
+                            <label style={{ color: 'black', lineHeight: '0' }} htmlFor='year'>Year</label>
+                        </Form.Floating>
+                    </Form.Group>
+
+                    {/*Issue Number Input*/}
+                    <Form.Group className="mb-3" controlId='issue'>
+                        <Form.Floating>
+                            <Form.Control id='issue' type='number' placeholder='Issue #' style={{ width: `60%`, height: '20px' }} />
+                            <label style={{ color: 'black', lineHeight: '0' }} htmlFor='issue'>Issue #</label>
+                        </Form.Floating>
+                    </Form.Group>
+                </Row>
+
+
+
+
                 <Form.Group controlId="formFile" className="mb-3">
                     <Form.Label>Default file input example</Form.Label>
                     <Form.Control type="file" onChange={(e) => setUpload(e.target.files[0])} />
@@ -74,14 +106,28 @@ const ComicsInput = () => {
                 </Button>
                 {progress}
             </Form>
+            <ImgPreview></ImgPreview>
         </Container>
     )
 }
 
 export default ComicsInput
 
+const ImgPreview = styled.div`
+    width: 50%;
+    height: auto;
+    background-color: black;
+    border: 2px solid red;
+    border-radius: 0 10% 10% 0;
+`
+const Row = styled.div`
+    display: flex;
+    gap: 5px;
+    align-content: flex-end;
+    margin-right: 30%;
+`
 const Container = styled.div`
-    padding: 5%;
+    display: flex;
     width: 50vw;
     height: auto;
     min-height: 60vh;
