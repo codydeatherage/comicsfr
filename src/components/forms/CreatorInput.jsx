@@ -8,7 +8,7 @@ const CreatorInput = ({ changeName, changeRole, index }) => {
         <Row className="g-2">
             <Col md>
                 <Form.Group className="mb-3" controlId="creator">
-                    <Form.Label>Name</Form.Label>
+                    <Form.Label style={{color: 'black'}}>Name</Form.Label>
                     <Form.Control
                         type="text"
                         placeholder="Name"
@@ -17,7 +17,7 @@ const CreatorInput = ({ changeName, changeRole, index }) => {
                 </Form.Group>
             </Col>
             <Col sm>
-                <Form.Label>Role</Form.Label>
+                <Form.Label style={{color: 'black'}} >Role</Form.Label>
                 <Form.Select aria-label="Floating label select example">
                     <option>Role</option>
                     <option value="1">Writer</option>
