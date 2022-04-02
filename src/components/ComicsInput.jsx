@@ -41,10 +41,10 @@ const ComicsInput = () => {
     for (let i = 0; i < creators.length; i++) {
         /* pass index as a prop so that we can tell
            which instance of CreatorInput belongs to which index */
-        allCreators.push(<CreatorInput style={{color: 'black'}}index={i} changeName={changeName} changeRole={changeRole} />);
+        allCreators.push(<CreatorInput style={{ color: 'black' }} index={i} changeName={changeName} changeRole={changeRole} />);
     }
     return (
-        <div style={{ backgroundColor: '#4d91ff', position: 'absolute', height: '100vh', width: '100vw' }}>
+        <div style={{ backgroundColor: '#4d91ff', position: 'absolute', height: '100%', width: '100%', /* padding: 'auto auto' */ }}>
             <Container>
                 <Form style={{ width: '50%', padding: '5%' }}>
 
@@ -56,6 +56,8 @@ const ComicsInput = () => {
                         </Form.Floating>
                     </Form.Group>
 
+
+
                     {/*Publisher Input*/}
                     <Form.Group className="mb-3" controlId='publisher'>
                         <Form.Floating>
@@ -63,9 +65,6 @@ const ComicsInput = () => {
                             <label style={{ color: 'black', lineHeight: '0' }} htmlFor='publisher'>Publisher</label>
                         </Form.Floating>
                     </Form.Group>
-
-                    {allCreators.map((c, index) => c)}
-                    <Button className="mb-3" variant="primary" type="button" onClick={addCreator} style={{ width: '100%' }}>+ Add Creator</Button>
 
                     {/*Year Input*/}
                     <Row>
@@ -77,16 +76,19 @@ const ComicsInput = () => {
                         </Form.Group>
 
                         {/*Issue Number Input*/}
-                        <Form.Group className="mb-3" controlId='issue'>
-                            <Form.Floating>
-                                <Form.Control id='issue' type='number' placeholder='Issue #' style={{ width: `60%`, height: '20px' }} />
-                                <label style={{ color: 'black', lineHeight: '0' }} htmlFor='issue'>Issue #</label>
-                            </Form.Floating>
+                        <Form.Group className="mb-3" controlId='issue' style={{ display: 'flex' }}>
+                            <label style={{ color: 'black', marginLeft: '10%', marginTop: '5px' }} htmlFor='issue'>Issue #</label>
+                            <Form.Control id='issue' type='number' style={{ width: `30%`, height: '35px', marginLeft: '5%' }} />
                         </Form.Group>
                     </Row>
 
+                    {allCreators.map((c, index) => c)}
+                    <Button className="mb-3" variant="primary" type="button" onClick={addCreator} style={{ width: '100%' }}>+ Add Creator</Button>
+
+
+
                     <Form.Group controlId="formFile" className="mb-3">
-                        <Form.Label>Default file input example</Form.Label>
+                        <Form.Label style={{ color: 'black' }}>Upload cover image</Form.Label>
                         <Form.Control type="file" onChange={(e) => setUpload(e.target.files[0])} />
                     </Form.Group>
 
@@ -128,15 +130,14 @@ const Row = styled.div`
     display: flex;
     gap: 5px;
     align-content: flex-end;
-    margin-right: 30%;
+    margin-right: 10%;
 `
 const Container = styled.div`
     display: flex;
     width: 50vw;
-    height: auto;
-    min-height: 60vh;
-    margin-left: 25vw;
-    margin-top: 10vh;
+    min-width: 665px;
+    height: max-content;
+    margin: 5% auto 0 auto;
     color: white;
     background-color: #f2fcfb;
     border-radius: 10%;

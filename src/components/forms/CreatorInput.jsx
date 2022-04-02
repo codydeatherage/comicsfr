@@ -2,6 +2,7 @@ import React from 'react'
 import Form from 'react-bootstrap/Form'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
+import './inputs.css'
 
 const CreatorInput = ({ changeName, changeRole, index }) => {
     return (
@@ -18,10 +19,10 @@ const CreatorInput = ({ changeName, changeRole, index }) => {
             </Col>
             <Col sm>
                 <Form.Label style={{color: 'black'}} >Role</Form.Label>
-                <Form.Select aria-label="Floating label select example">
+                <Form.Select style={{}} aria-label="Floating label select example">
                     <option>Role</option>
-                    <option value="1">Writer</option>
-                    <option value="2">Artist</option>
+                    <option style={{border: '2px solid red'}} value="1">Writer</option>
+                    <option style={{border: '2px solid red', color: 'red', border: 'none'}} value="2">Artist</option>
                     <option value="3">Letterer</option>
                 </Form.Select>
             </Col>

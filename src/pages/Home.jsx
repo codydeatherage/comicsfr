@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import ComicCarousel from '../components/ComicCarousel'
 import img1 from '../assets/sample.jpg'
-import img2 from '../assets/sample2.jpg'
 import img3 from '../assets/sample3.jpg'
 const Home = () => {
     const currentItems = [
@@ -13,7 +12,7 @@ const Home = () => {
         },
         {
             title: 'Moon Knight',
-            img: img2
+            img: img1
         },
         {
             title: 'Superman and the Authority',
