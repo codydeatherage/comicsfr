@@ -1,27 +1,30 @@
-import { BrowserRouter as Router, Route, Routes} from 'react-router-dom'
+import React from 'react'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import Home from './pages/Home'
 import ComicsInput from './components/ComicsInput'
 import './App.css';
 
 
 const App = () => {
-
   return (
     <Router>
       <Routes>
         <Route
           exact
           path="/"
-          element={<Home/>}
-          
+          element={<Home />}
+
         />
         <Route
           exact
           path="/comics"
-          element={<ComicsInput/>}
+          element={<ComicsInput />}
         />
       </Routes>
-    </Router>
+    </Router> /* 
+    <div style={{height: '100%', width: '100%', backgroundColor: 'black'}}>
+dfgdfg
+    </div> */
   );
 }
 /*TODO FOR CAROUSEL CARDS:
@@ -32,18 +35,4 @@ const App = () => {
   
 */
 
-
-
-// const Carousel = styled.div.attrs({
-//   className: 'carousel slide',
-//   dataRide: 'carousel',
-//   id: 'example'
-// })`
-
-// height: 30vh;
-// width: 25vw;
-// background-color: rgb(24,24,24);
-// margin: auto;
-
-// `
 export default App;
