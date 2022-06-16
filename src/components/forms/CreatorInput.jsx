@@ -11,7 +11,7 @@ const CreatorInput = ({ changeCreatorName, index, removeCreator, name, role }) =
         <Row className="g-2">
             <Col md>
                 <Form.Group className="mb-3" controlId="creator">
-                    <Form.Label style={{ color: 'black', fontSize: '15px' }}>Contributor Name</Form.Label>
+                    <Form.Label style={{ color: 'black', fontSize: '15px' }}>Creator Name</Form.Label>
                     <Form.Control
                         type="text"
                         value={name}
