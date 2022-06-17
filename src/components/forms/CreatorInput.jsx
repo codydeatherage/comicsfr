@@ -5,7 +5,7 @@ import Col from 'react-bootstrap/Col'
 import { X } from 'react-bootstrap-icons'
 import './inputs.css'
 
-const CreatorInput = ({ changeCreatorName, index, removeCreator, name, role }) => {
+const CreatorInput = ({ changeCreatorName, index, removeCreator, name, setCreatorName, setCreatorRole }) => {
 
     return (
         <Row className="g-2">
@@ -16,7 +16,7 @@ const CreatorInput = ({ changeCreatorName, index, removeCreator, name, role }) =
                         type="text"
                         value={name}
                         placeholder="Name"
-                        onChange={(e) => { changeCreatorName(e.target.value, index) }}
+                        onChange={(e) => { setCreatorName(e.target.value);}}
                     />
                 </Form.Group>
             </Col>
@@ -30,14 +30,14 @@ const CreatorInput = ({ changeCreatorName, index, removeCreator, name, role }) =
                         />
                     </div>
                     :
-                    <Form.Label style={{ color: 'black' }} >Role</Form.Label>
+                    <Form.Label style={{ color: 'black' }}  >Role</Form.Label>
                 }
 
-                <Form.Select aria-label="Floating label select example">
+                <Form.Select onChange={(e) => setCreatorRole(e.target.value)} aria-label="Floating label select example">
                     <option>Role</option>
-                    <option style={{ border: '2px solid red' }} value="1">Writer</option>
-                    <option style={{ border: '2px solid red', color: 'red' }} value="2">Artist</option>
-                    <option value="3">Letterer</option>
+                    <option style={{ border: '2px solid red' }} value="writer">Writer</option>
+                    <option style={{ border: '2px solid red', color: 'red' }} value="artist">Artist</option>
+                    <option value="letterer">Letterer</option>
                 </Form.Select>
             </Col>
         </Row>

@@ -12,13 +12,16 @@ import CreatorInput from './forms/CreatorInput'
 const ComicsInput = () => {
     //information about comic creators
     const [creators, changeCreators] = useState([{ name: "", role: "" }]);
+    const [creatorName, setCreatorName] = useState('');
+    const [creatorRole, setCreatorRole] = useState('')
     const [creatorsToDisplay, setCreatorsToDisplay] = useState();
     const [progress, setProgress] = useState(0);
     const [downloadURL, setDownloadURL] = useState();
     const [imageLoading, setImageLoading] = useState(false);
 
     const addCreator = () => {
-        changeCreators(prev => [...prev, { name: "", role: "" }])
+        console.log(`creator: ${creatorName}  ${creatorRole}`)
+        creatorName && creatorRole && changeCreators(prev => [...prev, { name: creatorName, role: creatorRole }])
     }
 
     const removeCreator = (index) => {
@@ -64,22 +67,22 @@ const ComicsInput = () => {
             title: event.target.title.value,
             publisher: event.target.publisher.value,
             year: event.target.year.value,
-            creators: creatorsToDisplay,
+            creators: creators.slice(1),
             coverImageURL: downloadURL
         }
         console.log('uploading payload...');
         await api.uploadIssue(payload);
         console.log('done');
-       
+
     }
-    useEffect(() => {
-        setCreatorsToDisplay(creators);
-    }, [creators])
+    /*     useEffect(() => {
+            setCreatorsToDisplay(creators);
+        }, [creators]) */
 
     return (
         <div style={{ backgroundColor: '#4d91ff', position: 'absolute', height: '100%', width: '100%', /* padding: 'auto auto' */ }}>
             <Container>
-                <Form style={{ width: '50%', padding: '5%' } } onSubmit={submit}>
+                <Form style={{ width: '50%', padding: '5%' }} onSubmit={submit}>
 
                     {/*Title Input*/}
                     <Form.Group className='mb-3' >
@@ -112,39 +115,46 @@ const ComicsInput = () => {
                             <Form.Control id='issue' type='number' style={{ width: `30%`, height: '35px', marginLeft: '5%' }} />
                         </Form.Group>
                     </Row>
+
+                    <Row style={{ width: '100%' }}>
+                        <CreatorInput setCreatorName={setCreatorName} setCreatorRole={setCreatorRole} />
+                        <Button className="mb-3" variant="primary" type="button" onClick={() => addCreator()} style={{ height: '20%', alignSelf: 'end', marginLeft: '15px' }}>Add</Button>
+
+                    </Row>
                     <div style={{ overflow: 'scroll', overflowX: 'hidden', maxHeight: '200px' }}>
-                        {creatorsToDisplay ?
-                            creatorsToDisplay.map(
-                                (c, index) =>
-                                    <CreatorInput
-                                        name={c.name}
-                                        role={c.role}
-                                        style={{ color: 'black' }}
-                                        index={index}
-                                        key={index + c.name}
-                                        changeCreatorName={changeCreatorName}
-                                        changeRole={changeRole}
-                                        removeCreator={removeCreator}
-                                    />
+                        {creators.length > 1 ?
+                            creators.map(
+                                (c, index) => {
+                                    console.log(c);
+                                    return (
+                                        <div style={{ color: 'black' }} key={c.role + c.name}>
+                                            {c.role && c.name &&
+                                                <>
+                                                    <div>
+
+                                                    </div>
+                                                    <p>{`${c.role}: ${c.name}`}</p>
+                                                </>
+
+                                            }
+                                        </div>
+                                    )
+                                }
+
                             )
                             :
-                            <CreatorInput
-                                name={creators[0].name}
-                                style={{ color: 'black' }}
-                                changeCreatorName={changeCreatorName}
-                                changeRole={changeRole}
-                                removeCreator={removeCreator}
-                            />
+                            <div style={{ color: 'black' }}>
+                                No contributors have been added yet
+                            </div>
                         }
                     </div>
-
-                    <Button className="mb-3" variant="primary" type="button" onClick={addCreator} style={{ width: '100%' }}>+ Add Creator</Button>
+                    {/*        <Button className="mb-3" variant="primary" type="button" onClick={addCreator} style={{ width: '100%' }}>+ Add Creator</Button> */}
                     <Form.Group className="mb-3">
                         <Form.Label style={{ color: 'black' }}>Upload cover image</Form.Label>
                         <Form.Control type="file" onChange={(e) => uploadImage(e.target.files[0])} />
                     </Form.Group>
 
-                    <Button variant="primary" type="submit" >
+                    <Button variant="primary" disabled={imageLoading ? true: false} type="submit" >
                         Submit
                     </Button>
                 </Form>
@@ -180,12 +190,11 @@ const Row = styled.div`
     align-content: flex-end;
     margin-right: 10%;
 `
-
 const Container = styled.div`
     display: flex;
-    width: 50vw;
+  /*   width: 50vw; */
     min-width: 665px;
-    max-width: 500px;
+    max-width: 1000px;
     height: max-content;
     margin: 5% auto 0 auto;
     color: white;
